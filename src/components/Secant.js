@@ -23,6 +23,7 @@ const Secant = ({calculateExpression, expression}) => {
         const newTable = []
         let xiMinus1Temp = xiMinus1
         let xiTemp = xi
+        let epsilon = null
         for (let i = 1; i<= iterations; i++){
             const fxiMinus1 = calculateExpression(expression, xiMinus1Temp)
             const fxi = calculateExpression(expression, xiTemp)
@@ -32,6 +33,10 @@ const Secant = ({calculateExpression, expression}) => {
                 setErrorMessage("Please enter a valid function")
                 return
             }
+            if (i > 1){
+                epsilon = Math.abs((xiPlusOne - xiTemp)/xiPlusOne) * 100
+                console.log('hello')
+            }
             newTable.push({
                 iteration: i,
                 xiMinus1: xiMinus1Temp,
@@ -39,7 +44,8 @@ const Secant = ({calculateExpression, expression}) => {
                 xi: xiTemp,
                 fxi: fxi,
                 xiPlusOne: xiPlusOne,
-                fxiPlusOne: fxiPlusOne
+                fxiPlusOne: fxiPlusOne,
+                epsilon: epsilon
             })
             xiMinus1Temp = xiTemp
             xiTemp = xiPlusOne
@@ -61,6 +67,7 @@ const Secant = ({calculateExpression, expression}) => {
     <td>{entry.fxi !== null ? entry.fxi.toFixed(3) : null}</td>
     <td>{entry.xiPlusOne !== null ? entry.xiPlusOne.toFixed(3) : null}</td>
     <td>{entry.fxiPlusOne !== null ? entry.fxiPlusOne.toFixed(3) : null}</td>
+    <td>{entry.epsilon !== null ? entry.epsilon.toFixed(3) : null} {index > 0 && '%'}</td>
 </tr>)
     return(
         <div className="method-container">
@@ -89,6 +96,7 @@ const Secant = ({calculateExpression, expression}) => {
                         <th>f(Xi)</th>
                         <th>X(i+1)</th>
                         <th>f(X(i+1))</th>
+                        <th>ϵA</th>
                     </tr>
                 </thead>
                 <tbody>

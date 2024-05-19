@@ -17,6 +17,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
     }))}
     const handleDerivative = (expression , x) => {
         expression = expression.replace(/X/g, 'x')
+        expression = expression.replace(/ln/g, 'Math.log')
         setDerivedExpression(derivative(expression, 'x').toString())
         console.log(expression)
         const derived = derivative(expression, 'x').toString()
@@ -28,6 +29,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
         const {xi, iterations} = inputs;
         let xiTemp = parseFloat(xi);
         const array = [];
+        let epsilon = null
         for(let i = 0; i < iterations; i++){
             let fxi = calculateExpression(expression, xiTemp);
             let fxiDerivative = handleDerivative(expression, xiTemp);
@@ -38,13 +40,17 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 setDerivedExpression('')
                 return
             }
+            if (i > 0){
+                epsilon = Math.abs((xiPlusOne - xiTemp) / xiPlusOne) * 100
+            }
             array.push({
                 iteration: i + 1,
                 xi: xiTemp,
                 fxi: fxi,
                 fxiDerivative: fxiDerivative,
                 xiPlusOne: xiPlusOne,
-                fxiPlusOne: fxiPlusOne
+                fxiPlusOne: fxiPlusOne,
+                epsilon
             })
             xiTemp = xiPlusOne;
             if(fxiPlusOne === 0){
@@ -61,6 +67,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
     <td>{entry.fxiDerivative !== null ? entry.fxiDerivative.toFixed(3) : null}</td>
     <td>{entry.xiPlusOne !== null ? entry.xiPlusOne.toFixed(3) : null}</td>
     <td>{entry.fxiPlusOne !== null ? entry.fxiPlusOne.toFixed(3) : null}</td>
+    <td>{entry.epsilon !== null ? entry.epsilon.toFixed(3) : null} {index > 0 && '%'}</td>
 </tr>)
   return (
     <div className='method-container'>
@@ -85,6 +92,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                         <th>f'(Xi)</th>
                         <th>X(i+1)</th>
                         <th>f(X(i+1))</th>
+                        <th>ϵA</th>
                     </tr>
                 </thead>
                 <tbody>

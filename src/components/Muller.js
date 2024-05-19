@@ -63,6 +63,7 @@ const Muller = ({calculateExpression, expression}) => {
         let x1Temp = x1
         let x2Temp = x2
         const newTable = []
+        let epsilon = null
         for (let i = 1; i <= inputs.iterations; i++){
             const fx0 = calculateExpression(expression, x0Temp)
             const fx1 = calculateExpression(expression, x1Temp)
@@ -70,6 +71,9 @@ const Muller = ({calculateExpression, expression}) => {
             const x3 = findX3(x0Temp, x1Temp, x2Temp)
             if(x3 === null){
                 return
+            }
+            if(i > 1){
+                epsilon = Math.abs((x3 - x2Temp)/x3) * 100
             }
             const fx3 = calculateExpression(expression, x3)
             if(fx0 == null || fx1 == null || fx2 == null || fx3 == null){
@@ -85,7 +89,8 @@ const Muller = ({calculateExpression, expression}) => {
                 x2: x2Temp,
                 fx2: fx2,
                 x3: x3,
-                fx3: fx3
+                fx3: fx3,
+                epsilon: epsilon
             })
             x0Temp = x1Temp
             x1Temp = x2Temp
@@ -110,6 +115,7 @@ const Muller = ({calculateExpression, expression}) => {
     <td>{entry.fx2 !== null ? entry.fx2.toFixed(3) : null}</td>
     <td>{entry.x3 !== null ? entry.x3.toFixed(3) : null}</td>
     <td>{entry.fx3 !== null ? entry.fx3.toFixed(3) : null}</td>
+    <td>{entry.epsilon !== null ? entry.epsilon.toFixed(2) : null} {index > 0 && '%'}</td>
     </tr>)
     return(
         <div className="method-container">
@@ -144,6 +150,7 @@ const Muller = ({calculateExpression, expression}) => {
                         <th>f(X2)</th>
                         <th>X3</th>
                         <th>f(X3)</th>
+                        <th>ϵA</th>
                     </tr>
                 </thead>
                 <tbody>

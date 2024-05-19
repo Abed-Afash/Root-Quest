@@ -95,12 +95,12 @@ input{
   }
   .table{
     max-width: 300px !important;
-    font-size: 8px;
+    font-size: 6px;
   }
   .inputs-container{
     flex-direction: column;
   }
   #muller-table{
-    font-size: 5px;
+    font-size: 3.5px;
   }
 }

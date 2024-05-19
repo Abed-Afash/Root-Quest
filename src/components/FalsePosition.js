@@ -13,7 +13,6 @@ const FalsePosition = ({calculateExpression, expression}) => {
     }
     const findXiPlusOne = (xiMinus1, xi, fxiMinus1, fxi) => {
         const result = xi - fxi * ((xi-xiMinus1)/(fxi-fxiMinus1))
-        console.log("root is " + result)
         return result
     }
     const handleFalsePosition = () => {
@@ -24,6 +23,7 @@ const FalsePosition = ({calculateExpression, expression}) => {
         const newTable = []
         let xiMinus1Temp = xiMinus1
         let xiTemp = xi
+        let epsilon = null
         for (let i = 1; i<= iterations; i++){
             const fxiMinus1 = calculateExpression(expression, xiMinus1Temp)
             const fxi = calculateExpression(expression, xiTemp)
@@ -33,6 +33,9 @@ const FalsePosition = ({calculateExpression, expression}) => {
                 setErrorMessage("Please enter a valid function")
                 return
             }
+            if(i > 1){
+                epsilon = Math.abs((xiPlusOne - newTable[i-2].xiPlusOne) / xiPlusOne) * 100
+            }
             newTable.push({
                 iteration: i,
                 xiMinus1: xiMinus1Temp,
@@ -40,7 +43,8 @@ const FalsePosition = ({calculateExpression, expression}) => {
                 xi: xiTemp,
                 fxi: fxi,
                 xiPlusOne: xiPlusOne,
-                fxiPlusOne: fxiPlusOne
+                fxiPlusOne: fxiPlusOne,
+                epsilon: epsilon
             })
             if((fxiPlusOne > 0 && fxi > 0) || (fxiPlusOne < 0 && fxi < 0)){
                 xiTemp = xiPlusOne
@@ -62,6 +66,7 @@ const FalsePosition = ({calculateExpression, expression}) => {
     <td>{entry.fxi !== null ? entry.fxi.toFixed(3) : null}</td>
     <td>{entry.xiPlusOne !== null ? entry.xiPlusOne.toFixed(3) : null}</td>
     <td>{entry.fxiPlusOne !== null ? entry.fxiPlusOne.toFixed(3) : null}</td>
+    <td>{entry.epsilon !== null ? entry.epsilon.toFixed(3) : null} {index > 0 && '%'}</td>
 </tr>)
     return(
         <div className="method-container">
@@ -90,6 +95,7 @@ const FalsePosition = ({calculateExpression, expression}) => {
                         <th>f(Xi)</th>
                         <th>X(i+1)</th>
                         <th>f(X(i+1))</th>
+                        <th>ϵA</th>
                     </tr>
                 </thead>
                 <tbody>

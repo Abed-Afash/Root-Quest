@@ -19,9 +19,13 @@ const Bisection = ({calculateExpression, expression}) => {
         setTable([])
         let xlTemp = parseFloat(inputs.xl)
         let xuTemp = parseFloat(inputs.xu)
+        let epsilon = null;
         const newTable = []
         for (let i = 1; i <= inputs.iterations; i++) {
             const xr = findXr(xlTemp, xuTemp);
+            if(i > 1){
+                epsilon = Math.abs((xr - newTable[i-2].xr) / xr) * 100
+            }
             const fxl = calculateExpression(expression, xlTemp);
             const fxu = calculateExpression(expression, xuTemp);
             const fxr = calculateExpression(expression, xr);
@@ -36,7 +40,8 @@ const Bisection = ({calculateExpression, expression}) => {
                 xu: xuTemp,
                 fxu: fxu,
                 xr: xr,
-                fxr: fxr
+                fxr: fxr,
+                epsilon: epsilon
             });
             if ((fxr > 0 && fxu > 0) || (fxr < 0 && fxu < 0)) {
                 xuTemp = xr;
@@ -58,6 +63,7 @@ const Bisection = ({calculateExpression, expression}) => {
         <td>{entry.fxu !== null ? entry.fxu.toFixed(3) : null}</td>
         <td>{entry.xr !== null ? entry.xr.toFixed(3) : null}</td>
         <td>{entry.fxr !== null ? entry.fxr.toFixed(3) : null}</td>
+        <td>{entry.epsilon !== null ? entry.epsilon.toFixed(2) : null} {index > 0 && '%'}</td>
     </tr>)
     return(
         <div className="method-container">
@@ -86,6 +92,7 @@ const Bisection = ({calculateExpression, expression}) => {
                         <th>f(xu)</th>
                         <th>Xr</th>
                         <th>f(xr)</th>
+                        <th>ϵA</th>
                     </tr>
                 </thead>
                 <tbody>
