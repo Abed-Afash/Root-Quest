@@ -32,6 +32,9 @@ const Secant = ({calculateExpression, expression}) => {
             if(fxiMinus1 == null || fxi == null || fxiPlusOne == null){
                 setErrorMessage("Please enter a valid function")
                 return
+            } else if(fxiMinus1 === 'complex' || fxi === 'complex' || fxiPlusOne === 'complex'){
+                setErrorMessage("Complex numbers are not supported")
+                return
             }
             if (i > 1){
                 epsilon = Math.abs((xiPlusOne - xiTemp)/xiPlusOne) * 100

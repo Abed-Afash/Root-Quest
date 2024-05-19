@@ -79,6 +79,9 @@ const Muller = ({calculateExpression, expression}) => {
             if(fx0 == null || fx1 == null || fx2 == null || fx3 == null){
                 setErrorMessage("Please enter a valid function")
                 return
+            } else if(fx0 === 'complex' || fx1 === 'complex' || fx2 === 'complex' || fx3 === 'complex'){
+                setErrorMessage("Complex numbers are not supported")
+                return
             }
             newTable.push({
                 iteration: i,

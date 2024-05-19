@@ -6,7 +6,7 @@ import Secant from './components/Secant'
 import Muller from './components/Muller'
 import Header from './components/Header'
 import NewtonRaphson from './components/NewtonRaphson'
-import {parse} from 'mathjs'
+import {complex, parse, isComplex} from 'mathjs'
 function App() {
   const [mode, setMode] = React.useState("Bisection")
   const [expression, setExpression] = React.useState("")
@@ -21,6 +21,9 @@ function App() {
       const node = parse(expression)
       const scope = {x}
       const result = node.evaluate(scope)
+      if(isComplex(result)){
+        return 'complex'
+      }
       console.log(result)
       return result
   } catch(error){

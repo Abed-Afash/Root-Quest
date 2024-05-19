@@ -32,6 +32,9 @@ const Bisection = ({calculateExpression, expression}) => {
             if(fxl == null || fxu == null || fxr == null){
                 setErrorMessage("Please enter a valid function")
                 return
+            } else if(fxr === 'complex' || fxl === 'complex' || fxu === 'complex'){
+                setErrorMessage("Complex numbers are not supported")
+                return
             }
             newTable.push({
                 iteration: i,

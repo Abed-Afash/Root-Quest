@@ -39,6 +39,9 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 setErrorMessage("Please enter a valid function")
                 setDerivedExpression('')
                 return
+            } else if(fxi === 'complex' || fxiPlusOne === 'complex'){
+                setErrorMessage("Complex numbers are not supported")
+                return
             }
             if (i > 0){
                 epsilon = Math.abs((xiPlusOne - xiTemp) / xiPlusOne) * 100
