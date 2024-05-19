@@ -15,12 +15,13 @@ function App() {
     type === "select-one" ? setMode(value) : setExpression(value)
   }
   const calculateExpression = (expression, x) => {
-    expression = expression.replace(/ln/g, 'Math.log')
+    expression = expression.replace(/ln/g, 'log')
     expression = expression.replace(/X/g, 'x')
     try{
       const node = parse(expression)
       const scope = {x}
       const result = node.evaluate(scope)
+      console.log(result)
       return result
   } catch(error){
       console.error(error)

@@ -17,7 +17,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
     }))}
     const handleDerivative = (expression , x) => {
         expression = expression.replace(/X/g, 'x')
-        expression = expression.replace(/ln/g, 'Math.log')
+        expression = expression.replace(/ln/g, 'log')
         setDerivedExpression(derivative(expression, 'x').toString())
         console.log(expression)
         const derived = derivative(expression, 'x').toString()
