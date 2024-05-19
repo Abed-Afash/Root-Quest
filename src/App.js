@@ -6,7 +6,7 @@ import Secant from './components/Secant'
 import Muller from './components/Muller'
 import Header from './components/Header'
 import NewtonRaphson from './components/NewtonRaphson'
-import {complex, parse, isComplex} from 'mathjs'
+import {parse, isComplex} from 'mathjs'
 function App() {
   const [mode, setMode] = React.useState("Bisection")
   const [expression, setExpression] = React.useState("")
