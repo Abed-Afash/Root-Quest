@@ -132,7 +132,7 @@ const Muller = ({calculateExpression, expression}) => {
                 <input placeholder='How many iterations?' id='iterations' type='number' name="iterations" required value={inputs.iterations} onChange={handleChange}/>
                 <button onClick={handleMuller}>Calculate</button>
             </div>
-            {table.length > 0 && <table className="table">
+            {table.length > 0 && <table className="table" id="muller-table">
                 <thead>
                     <tr>
                         <th>Iteration</th>

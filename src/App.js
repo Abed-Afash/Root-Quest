@@ -16,6 +16,7 @@ function App() {
   }
   const calculateExpression = (expression, x) => {
     expression = expression.replace(/ln/g, 'Math.log')
+    expression = expression.replace(/X/g, 'x')
     try{
       const node = parse(expression)
       const scope = {x}

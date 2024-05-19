@@ -16,9 +16,11 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
             [name]: value
     }))}
     const handleDerivative = (expression , x) => {
+        expression = expression.replace(/X/g, 'x')
         setDerivedExpression(derivative(expression, 'x').toString())
+        console.log(expression)
         const derived = derivative(expression, 'x').toString()
-        console.log(derived)
+        console.log("derived " + derived)
         return calculateExpression(derived, x)
     }
     const handleNewtonRaphson = () => {
@@ -52,7 +54,6 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
         setTable(array)
         setErrorMessage('')
     }
-    console.log(table)
     const htmlTable = table.map((entry,index) => <tr key={index}>
     <td>{entry.iteration}</td>
     <td>{entry.xi !== null ? entry.xi.toFixed(3) : null}</td>
