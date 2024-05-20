@@ -84,7 +84,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 <input placeholder='How many iterations?' id='iterations' type='number' name="iterations" required onChange={handleChange} value={inputs.iterations}/>
                 <button onClick={handleNewtonRaphson}>Calculate</button>
             </div>
-            {derivedExpression && <h1>Derivative: {derivedExpression}</h1>}
+            {derivedExpression && <h1 className="derivative">Derivative: {derivedExpression}</h1>}
             {table.length > 0 && <table className="table">
                 <thead>
                     <tr>
