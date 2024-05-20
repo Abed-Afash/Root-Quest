@@ -38,7 +38,6 @@ const Secant = ({calculateExpression, expression}) => {
             }
             if (i > 1){
                 epsilon = Math.abs((xiPlusOne - xiTemp)/xiPlusOne) * 100
-                console.log('hello')
             }
             newTable.push({
                 iteration: i,

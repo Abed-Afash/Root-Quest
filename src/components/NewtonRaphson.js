@@ -15,14 +15,12 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
            ...prev,
             [name]: value
     }))}
-    const handleDerivative = (expression , x) => {
+    const handleDerivative = (expression) => {
         expression = expression.replace(/X/g, 'x')
         expression = expression.replace(/ln/g, 'log')
         setDerivedExpression(derivative(expression, 'x').toString())
-        console.log(expression)
         const derived = derivative(expression, 'x').toString()
-        console.log("derived " + derived)
-        return calculateExpression(derived, x)
+        return derived
     }
     const handleNewtonRaphson = () => {
         setTable([])
@@ -30,9 +28,10 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
         let xiTemp = parseFloat(xi);
         const array = [];
         let epsilon = null
+        let derivedExpression = handleDerivative(expression)
         for(let i = 0; i < iterations; i++){
             let fxi = calculateExpression(expression, xiTemp);
-            let fxiDerivative = handleDerivative(expression, xiTemp);
+            let fxiDerivative = calculateExpression(derivedExpression, xiTemp);
             let xiPlusOne = xiTemp - (fxi/fxiDerivative);
             let fxiPlusOne = calculateExpression(expression, xiPlusOne);
             if(fxi == null || fxiPlusOne == null){

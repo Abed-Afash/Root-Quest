@@ -24,7 +24,6 @@ function App() {
       if(isComplex(result)){
         return 'complex'
       }
-      console.log(result)
       return result
   } catch(error){
       console.error(error)
