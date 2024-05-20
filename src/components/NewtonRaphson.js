@@ -80,8 +80,10 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 </div>
             </div>
             <div className='submit-container'>
-                <label htmlFor = 'iterations'>Iterations: </label>
-                <input placeholder='How many iterations?' id='iterations' type='number' name="iterations" required onChange={handleChange} value={inputs.iterations}/>
+            <div className="iternations">
+                    <label htmlFor = 'iterations'>Iterations: </label>
+                    <input placeholder='How many iterations?' id='iterations' type='number' required name="iterations" value={inputs.iterations} onChange={handleChange}/>
+                </div>
                 <button onClick={handleNewtonRaphson}>Calculate</button>
             </div>
             {derivedExpression && <h1 className="derivative">Derivative: {derivedExpression}</h1>}

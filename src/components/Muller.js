@@ -137,8 +137,10 @@ const Muller = ({calculateExpression, expression}) => {
                 </div>
             </div>
             <div className='submit-container'>
-                <label htmlFor = 'iterations'>Iterations: </label>
-                <input placeholder='How many iterations?' id='iterations' type='number' name="iterations" required value={inputs.iterations} onChange={handleChange}/>
+                <div className="iternations">
+                    <label htmlFor = 'iterations'>Iterations: </label>
+                    <input placeholder='How many iterations?' id='iterations' type='number' required name="iterations" value={inputs.iterations} onChange={handleChange}/>
+                </div>
                 <button onClick={handleMuller}>Calculate</button>
             </div>
             {table.length > 0 && <table className="table" id="muller-table">
