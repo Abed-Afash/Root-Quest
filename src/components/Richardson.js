@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {integral} from 'algebrite'
 import AnimationReveal from '../helpers/AnimationRevealPage'
 const Richardson = ({expression, calculateExpression, integratedExpression, setIntegratedExpression, findTrueValue, findIntegral}) => {
     const [inputs, setInputs] = useState({
