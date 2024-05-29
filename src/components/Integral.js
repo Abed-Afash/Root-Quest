@@ -55,8 +55,8 @@ const Integral = () => {
             <input placeholder='Please enter the equation' id='equation' onChange={handleChange} value={expression} required/>
           </div>
           {mode === "Trapezoidal" && <Trapezoidal calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
-          {mode === "Simpson's 1/3" && <Simpson8 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
-          {mode === "Simpson's 3/8" && <Simpson3 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
+          {mode === "Simpson's 1/3" && <Simpson3 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
+          {mode === "Simpson's 3/8" && <Simpson8 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
           {mode === "Richardson" && <Richardson calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
           {mode === "Guass Legender" && <GuassLegender calculateExpression = {calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue}/>}
         </form>

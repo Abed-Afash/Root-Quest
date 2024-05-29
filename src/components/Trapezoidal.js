@@ -17,26 +17,27 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
         const {value, name} = event.target
         setInputs(prevInputs => ({...prevInputs, [name]: value}))
     }
-    console.log(calculateExpression(expression, 1.9))
     const findTheXs = (lower, upper, n) => {
         let xs = []
         let segment = (upper - lower) / n
-        console.log(segment)
         for (let i = 0; i <= n; i++) {
             xs.push((lower + i * segment))
         }
         return xs
     }
     const calculateExpressions = (xs, expression) => {
-        console.log(xs)
         let fxs = xs.map(entry => calculateExpression(expression,entry))
-        console.log(fxs)
         return fxs
     }
     const handleTrapezoidal = () => {
+        setResult({})
         const upper = parseFloat(inputs.upper)
         const lower = parseFloat(inputs.lower)
         const n = parseFloat(inputs.n)
+        if(n <= 0){
+            setErrorMessage("n must be greater than 0")
+            return
+          }
         const xs = findTheXs(lower, upper, n)
         const fxs = calculateExpressions(xs, expression)
         const integratedExpressionTemp = integral(expression).toString()
@@ -51,7 +52,7 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
                 setErrorMessage("Complex numbers are not supported")
                 return
             }
-            if (i !== 0 && i !== xs.length - 1){
+            if (i !== 0 && i !== fxs.length - 1){
                 sum = sum + 2 * fxs[i]
             } else{
                 sum = sum + fxs[i]
@@ -60,6 +61,7 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
         const approximation = (upper - lower) * sum / (2 * n)
         let marginOfError = Math.abs(((trueValue - approximation) / trueValue) * 100)
         setResult({...result, approximation, trueValue, marginOfError})
+        setErrorMessage('')
     }
 
   return (
@@ -90,6 +92,7 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
 
                 </div>
             </AnimationReveal>}
+            {errorMessage && <h1>{errorMessage}</h1>}
     </div>
   )
 }
