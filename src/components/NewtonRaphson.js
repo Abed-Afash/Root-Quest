@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {derivative} from 'mathjs'
+import AnimationReveal from '../helpers/AnimationRevealPage'
 
 const NewtonRaphson = ({calculateExpression, expression}) => {
     const [derivedExpression, setDerivedExpression] = useState('')
@@ -87,7 +88,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 <button onClick={handleNewtonRaphson}>Calculate</button>
             </div>
             {derivedExpression && <h1 className="derivative">Derivative: {derivedExpression}</h1>}
-            {table.length > 0 && <table className="table">
+            {table.length > 0 && <AnimationReveal><table className="table">
                 <thead>
                     <tr>
                         <th>Iteration</th>
@@ -102,7 +103,7 @@ const NewtonRaphson = ({calculateExpression, expression}) => {
                 <tbody>
                     {htmlTable}
                 </tbody>
-            </table>}
+            </table></AnimationReveal>}
             {errorMessage.length > 0 && <h1>{errorMessage}</h1>}
     </div>
   )

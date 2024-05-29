@@ -9,7 +9,9 @@ const Simpsons3 = ({expression, calculateExpression, integratedExpression, setIn
     const [result, setResult] = useState({
         trueValue: null,
         approximation: null,
-        marginOfError: null
+        marginOfError: null,
+        xs: [],
+        fxs: []
     })
     const [errorMessage, setErrorMessage] = useState('')
     const handleChange = (event) => {
@@ -38,7 +40,13 @@ const Simpsons3 = ({expression, calculateExpression, integratedExpression, setIn
         return fxs
     }
     const handleSimpsons = () => {
-      setResult({})
+      setResult({
+        trueValue: null,
+        approximation: null,
+        marginOfError: null,
+        xs: [],
+        fxs: []
+    })
       if (inputs.upper === '' || inputs.lower === '' || inputs.n === '' || expression === '') {
         setErrorMessage('Please fill out all fields.');
         return;
@@ -80,9 +88,13 @@ const Simpsons3 = ({expression, calculateExpression, integratedExpression, setIn
         }
         const approximation = (upper - lower) * sum  * 3 / (8 * n)
         let marginOfError = Math.abs(((trueValue - approximation) / trueValue) * 100)
-        setResult({...result, approximation, trueValue, marginOfError})
+        setResult({...result, approximation, trueValue, marginOfError, xs, fxs})
         setErrorMessage('')
     }
+    const htmlTable = result.xs.map((_ ,index) => <tr key={index}>
+    <td>{result.xs[index].toFixed(3)}</td>
+    <td>{result.fxs[index].toFixed(3)}</td>
+    </tr>)
 
   return (
     <div className="method-container">
@@ -110,6 +122,19 @@ const Simpsons3 = ({expression, calculateExpression, integratedExpression, setIn
                     {result.approximation && <div className='approximation'>Approximation: {result.approximation.toFixed(8)}</div>}
                     {result.marginOfError >= 0 && <div className='epsilon'>ƐT: {result.marginOfError.toFixed(4)} %</div>}
 
+                </div>
+                <div>
+                {result.xs.length > 0 && <table className="table" id='table'>
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>F(x)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {htmlTable}
+                </tbody>
+            </table>}
                 </div>
             </AnimationReveal>}
             {errorMessage && <h1>{errorMessage}</h1>}

@@ -133,6 +133,9 @@ input:focus{
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+#table tbody tr{
+  background-color: #12181f;
+}
 .table thead tr{
   background-color: #009879;
   color: white;
@@ -146,7 +149,8 @@ input:focus{
   border-bottom: 1px solid lightgray;
 }
 .table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: #f3f3f3 !important;
+  color: black;
 }
 .table tbody tr:last-of-type{
   border-bottom: 2px solid #009879;
@@ -193,6 +197,11 @@ input:focus{
 .epsilon{
   grid-row-start: 3;
   grid-column-start: 2;
+}
+.two-tables{
+  display: flex;
+  gap: 20px;
+  text-align: center;
 }
 @media (max-width: 768px) {
   #equation{

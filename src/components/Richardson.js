@@ -10,7 +10,11 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
     const [result, setResult] = useState({
         trueValue: null,
         approximation: null,
-        marginOfError: null
+        marginOfError: null,
+        xs1: [],
+        fxs1: [],
+        xs2: [],
+        fxs2: []
     })
     const [errorMessage, setErrorMessage] = useState('')
     const handleChange = (event) => {
@@ -39,7 +43,15 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
         return fxs
     }
     const handleRichardson = () => {
-        setResult({})
+        setResult({
+            trueValue: null,
+            approximation: null,
+            marginOfError: null,
+            xs1: [],
+            fxs1: [],
+            xs2: [],
+            fxs2: []
+        })
         if (inputs.upper === '' || inputs.lower === '' || inputs.n1 === '' || expression === '' || inputs.n2 === '') {
             setErrorMessage('Please fill out all fields.');
             return;
@@ -96,10 +108,18 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
         const approximation2 = (upper - lower) * sum2 / (2 * n2)
         const approximation = (4/3) * approximation2 - (1/3) * approximation1
         let marginOfError = Math.abs(((trueValue - approximation) / trueValue) * 100)
-        setResult({...result, approximation, trueValue, marginOfError})
+        setResult({...result, approximation, trueValue, marginOfError, xs1, xs2, fxs1, fxs2})
         setErrorMessage('')
     }
-
+    console.log(result.xs1)
+        const htmlTable1 = result.xs1.map((_ ,index) => <tr key={index}>
+    <td>{result.xs1[index].toFixed(3)}</td>
+    <td>{result.fxs1[index].toFixed(3)}</td>
+</tr>)
+    const htmlTable2 = result.xs2.map((_ ,index) => <tr key={index}>
+    <td>{result.xs2[index].toFixed(3)}</td>
+    <td>{result.fxs2[index].toFixed(3)}</td>
+    </tr>)
   return (
     <div className="method-container">
             <div className="inputs-container">
@@ -131,6 +151,36 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
                     {result.marginOfError >= 0 && <div className='epsilon'>ƐT: {result.marginOfError.toFixed(4)} %</div>}
 
                 </div>
+                <div className='two-tables'>
+                    <div>
+                <h2>n1</h2>
+                {result.xs1.length > 0 && <table className="table" id='table'>
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>F(x)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {htmlTable1}
+                </tbody>
+            </table>}
+                    </div>
+                    <div>
+                        <h2>n2</h2>
+            {result.xs2.length > 0 && <table className="table" id='table'>
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>F(x)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {htmlTable2}
+                </tbody>
+            </table>}
+                </div>
+                    </div>
             </AnimationReveal>}
             {errorMessage && <h1>{errorMessage}</h1>}
     </div>

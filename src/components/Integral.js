@@ -3,7 +3,6 @@ import Trapezoidal from './Trapezoidal'
 import Simpson3 from './Simpson3'
 import Simpson8 from './Simpson8'
 import Richardson from './Richardson'
-import GuassLegender from './GuassLegender'
 import {parse, isComplex} from 'mathjs'
 import {integral} from 'algebrite'
 const Integral = () => {
@@ -55,7 +54,6 @@ const Integral = () => {
             <option value="Simpson's 1/3">Simpson's 1/3</option>
             <option value="Simpson's 3/8">Simpson's 3/8</option>
             <option value="Richardson">Richardson</option>
-            <option value="Guass Legender">Guass Legender</option>
           </select>
           <div>
             <label htmlFor = 'equation'>f(x) = </label>
@@ -65,7 +63,6 @@ const Integral = () => {
           {mode === "Simpson's 1/3" && <Simpson3 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue} findIntegral={findIntegral}/>}
           {mode === "Simpson's 3/8" && <Simpson8 calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue} findIntegral={findIntegral}/>}
           {mode === "Richardson" && <Richardson calculateExpression ={calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue} findIntegral={findIntegral}/>}
-          {mode === "Guass Legender" && <GuassLegender calculateExpression = {calculateExpression} expression = {expression} integratedExpression={integratedExpression} setIntegratedExpression={setIntegratedExpression} findTrueValue={findTrueValue} findIntegral={findIntegral}/>}
         </form>
       
       </div>

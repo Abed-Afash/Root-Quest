@@ -1,4 +1,5 @@
 import React from "react"
+import AnimationReveal from "../helpers/AnimationRevealPage"
 const FalsePosition = ({calculateExpression, expression}) => {
     const [inputs, setInputs] = React.useState({
         xiMinus1:"",
@@ -90,7 +91,7 @@ const FalsePosition = ({calculateExpression, expression}) => {
                 </div>
                 <button onClick={handleFalsePosition}>Calculate</button>
             </div>
-            {table.length > 0 && <table className="table">
+            {table.length > 0 && <AnimationReveal><table className="table">
                 <thead>
                     <tr>
                         <th>Iteration</th>
@@ -106,7 +107,7 @@ const FalsePosition = ({calculateExpression, expression}) => {
                 <tbody>
                     {htmlTable}
                 </tbody>
-            </table>}
+            </table></AnimationReveal>}
             {errorMessage.length > 0 && <h1>{errorMessage}</h1>}
         </div>
     )

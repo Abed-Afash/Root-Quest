@@ -9,7 +9,9 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
     const [result, setResult] = useState({
         trueValue: null,
         approximation: null,
-        marginOfError: null
+        marginOfError: null,
+        xs: [],
+        fxs: []
     })
     const [errorMessage, setErrorMessage] = useState('')
     const handleChange = (event) => {
@@ -38,7 +40,13 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
         return fxs
     }
     const handleTrapezoidal = () => {
-        setResult({})
+        setResult({
+            trueValue: null,
+            approximation: null,
+            marginOfError: null,
+            xs: [],
+            fxs: []
+        })
         if (inputs.upper === '' || inputs.lower === '' || inputs.n === '' || expression === '') {
             setErrorMessage('Please fill out all fields.');
             return;
@@ -52,6 +60,7 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
           }
         const xs = findTheXs(lower, upper, n)
         const fxs = calculateExpressions(xs, expression)
+        console.log(fxs)
         if(fxs === null){
             setErrorMessage("Please enter a valid function")
             return
@@ -72,9 +81,13 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
         }
         const approximation = (upper - lower) * sum / (2 * n)
         let marginOfError = Math.abs(((trueValue - approximation) / trueValue) * 100)
-        setResult({...result, approximation, trueValue, marginOfError})
+        setResult({...result, approximation, trueValue, marginOfError, xs, fxs})
         setErrorMessage('')
     }
+    const htmlTable = result.xs.map((_ ,index) => <tr key={index}>
+    <td>{result.xs[index].toFixed(3)}</td>
+    <td>{result.fxs[index].toFixed(3)}</td>
+</tr>)
 
   return (
     <div className="method-container">
@@ -96,12 +109,26 @@ const Trapezoidal = ({expression, calculateExpression, integratedExpression, set
                 <button onClick={handleTrapezoidal} className='integral-button'>Calculate</button>
             </div>
             {result.trueValue && <AnimationReveal>
+
                 <div className='grid'>
                     {integratedExpression &&<div className='integral'>Integral: {integratedExpression}</div>}
                     {result.trueValue && <div className='true-value'>True value: {result.trueValue.toFixed(8)}</div>}
                     {result.approximation && <div className='approximation'>Approximation: {result.approximation.toFixed(8)}</div>}
                     {result.marginOfError >= 0 && <div className='epsilon'>ƐT: {result.marginOfError.toFixed(4)} %</div>}
 
+                </div>
+                <div>
+                {result.xs.length > 0 && <table className="table" id='table'>
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>F(x)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {htmlTable}
+                </tbody>
+            </table>}
                 </div>
             </AnimationReveal>}
             {errorMessage && <h1>{errorMessage}</h1>}

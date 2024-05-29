@@ -1,4 +1,5 @@
 import React from "react"
+import AnimationReveal from "../helpers/AnimationRevealPage"
 const Muller = ({calculateExpression, expression}) => {
     const [inputs, setInputs] = React.useState({
         x0:"",
@@ -143,7 +144,7 @@ const Muller = ({calculateExpression, expression}) => {
                 </div>
                 <button onClick={handleMuller}>Calculate</button>
             </div>
-            {table.length > 0 && <table className="table" id="muller-table">
+            {table.length > 0 && <AnimationReveal> <table className="table" id="muller-table">
                 <thead>
                     <tr>
                         <th>Iteration</th>
@@ -161,7 +162,7 @@ const Muller = ({calculateExpression, expression}) => {
                 <tbody>
                     {htmlTable}
                 </tbody>
-            </table>}
+            </table></AnimationReveal>}
             {errorMessage.length > 0 && <h1>{errorMessage}</h1>}
         </div>
     )
