@@ -73,11 +73,11 @@ const Bisection = ({calculateExpression, expression}) => {
             <div className="inputs-container">
                 <div>
                     <label htmlFor="xl">Xl = </label>
-                    <input placeholder="Enter xl" type="" onChange={handleChange} name="xl" required/>
+                    <input placeholder="Enter xl" type="number" onChange={handleChange} name="xl" required value={inputs.xl}/>
                 </div>
                 <div>
                     <label htmlFor="xu">Xu = </label>
-                    <input placeholder="Enter xu" type='number' onChange={handleChange} name="xu" required/>
+                    <input placeholder="Enter xu" type='number' onChange={handleChange} name="xu" required value={inputs.xu}/>
                 </div>
             </div>
             <div className='submit-container'>

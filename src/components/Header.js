@@ -1,7 +1,8 @@
-const Header = () => {
+const Header = ({category, setCategory}) => {
     return(
         <div className="header">
-            <h3>RootQuest</h3>
+            <button className={category === 'root' ? 'modeButton' : ''} onClick={() => setCategory('root')}>RootQuest</button>
+            <button className={category === 'integral' ? 'modeButton' : ''} onClick={() => setCategory('integral')}>IntegralQuest</button>
         </div>
     )
 }
