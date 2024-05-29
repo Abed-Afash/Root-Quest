@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {integral} from 'algebrite'
 import AnimationReveal from '../helpers/AnimationRevealPage'
-const Richardson = ({expression, calculateExpression, integratedExpression, setIntegratedExpression, findTrueValue}) => {
+const Richardson = ({expression, calculateExpression, integratedExpression, setIntegratedExpression, findTrueValue, findIntegral}) => {
     const [inputs, setInputs] = useState({
         upper: '',
         lower: '',
@@ -27,11 +27,24 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
         return xs
     }
     const calculateExpressions = (xs, expression) => {
-        let fxs = xs.map(entry => calculateExpression(expression,entry))
+        let fxs = []
+        for (let i = 0; i < xs.length; i++) {
+            const entry = calculateExpression(expression, xs[i])
+            if (entry === null){
+                return null
+            } else if(entry === 'complex'){
+                return 'complex'
+            }
+            fxs.push(entry)
+        }
         return fxs
     }
     const handleRichardson = () => {
         setResult({})
+        if (inputs.upper === '' || inputs.lower === '' || inputs.n1 === '' || expression === '' || inputs.n2 === '') {
+            setErrorMessage('Please fill out all fields.');
+            return;
+        }
         const upper = parseFloat(inputs.upper)
         const lower = parseFloat(inputs.lower)
         const n1 = parseFloat(inputs.n1)
@@ -47,19 +60,19 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
         const xs2 = findTheXs(lower, upper, n2)
         const fxs1 = calculateExpressions(xs1, expression)
         const fxs2 = calculateExpressions(xs2, expression)
-        const integratedExpressionTemp = integral(expression).toString()
+        if(fxs1 === null || fxs2 === null){
+            setErrorMessage("Please enter a valid function")
+            return
+        } else if (fxs1 === 'complex' || fxs2 === 'complex'){
+            setErrorMessage("Complex numbers are not supported")
+            return
+        }
+        const integratedExpressionTemp = findIntegral(expression)
         setIntegratedExpression(integratedExpressionTemp)
         const trueValue = findTrueValue(integratedExpressionTemp, lower, upper)
         let sum1 = 0
         let sum2 = 0
         for (let i = 0; i < fxs1.length; i++){
-            if(fxs1[i] === null){
-                setErrorMessage("Please enter a valid function")
-                return
-            } else if (fxs1[i] === 'complex'){
-                setErrorMessage("Complex numbers are not supported")
-                return
-            }
             if (i !== 0 && i !== fxs1.length - 1){
                 sum1 = sum1 + 2 * fxs1[i]
             } else{
@@ -109,14 +122,14 @@ const Richardson = ({expression, calculateExpression, integratedExpression, setI
                     <label htmlFor = 'n2'>n2 = </label>
                     <input placeholder='Please enter n2' id='n2' type='number' required name="n2" value={inputs.n} onChange={handleChange}/>
                 </div>
-                <button onClick={handleRichardson}>Calculate</button>
+                <button onClick={handleRichardson} className='integral-button'>Calculate</button>
             </div>
             {result.trueValue && <AnimationReveal>
                 <div className='grid'>
                     {integratedExpression &&<div className='integral'>Integral: {integratedExpression}</div>}
                     {result.trueValue && <div className='true-value'>True value: {result.trueValue.toFixed(8)}</div>}
                     {result.approximation && <div className='approximation'>Approximation: {result.approximation.toFixed(8)}</div>}
-                    {result.marginOfError && <div className='epsilon'>ƐT: {result.marginOfError.toFixed(4)} %</div>}
+                    {result.marginOfError >= 0 && <div className='epsilon'>ƐT: {result.marginOfError.toFixed(4)} %</div>}
 
                 </div>
             </AnimationReveal>}
